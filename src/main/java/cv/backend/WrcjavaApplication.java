@@ -4,6 +4,7 @@ import cv.backend.dao.AddressRepository;
 import cv.backend.dao.UserRepository;
 import cv.backend.model.Address;
 import cv.backend.model.User;
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootApplication
 public class WrcjavaApplication implements CommandLineRunner {
@@ -40,14 +40,9 @@ public class WrcjavaApplication implements CommandLineRunner {
 //        Address address4 = new Address("Uk", "London", "42 street");
 //        addressRepository.save(address4);
 
-
-        Set<String> roles = new HashSet<>();
-        Set<String> roles2 = new HashSet<>();
-        roles.add("admin");
-        roles2.add("user");
-        User user1 = new User("Tor", "Tor", "Valhalsky", "tor@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address);
-        User user2 = new User("Hulk","Hulk", "Hulkavic", "hulk@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address2);
-        User user3 = new User("IronMan","IronMan", "IronManovich", "iron@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address3);
+        User user1 = new User("Tor", "Tor", "Valhalsky", "tor@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address, new HashSet<>());
+        User user2 = new User("Hulk","Hulk", "Hulkavic", "hulk@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address2, new HashSet<>());
+        User user3 = new User("IronMan","IronMan", "IronManovich", "iron@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address3, new HashSet<>());
 //        User user4 = new User("Terminator","Terminator", "Terminatovich", "terminator@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address);
 
         userRepository.save(user1);

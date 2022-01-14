@@ -35,6 +35,18 @@ public class User {
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     Address address;
-//    Set<Ticket> ticketSet;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    Set<Ticket> tickets;
+
+    public Ticket addTicket(Ticket ticket){
+        tickets.add(ticket);
+        return ticket;
+    }
+
+    private Ticket removeTicket(Ticket ticket){
+        tickets.remove(ticket);
+        return ticket;
+    }
 
 }

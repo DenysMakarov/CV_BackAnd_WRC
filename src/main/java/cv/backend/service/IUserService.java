@@ -1,6 +1,7 @@
 package cv.backend.service;
 
 import cv.backend.dto.AddressDto;
+import cv.backend.dto.TicketDto;
 import cv.backend.dto.UserDto;
 import cv.backend.model.Address;
 import cv.backend.model.User;
@@ -18,11 +19,7 @@ public interface IUserService {
 
     UserDto removeUser(String id);
 
-//    AddressDto getAddress( String city, String country, String street);
-
-//    AddressDto addAddress(String city);
-
-//    AddressDto getAddress(String city);
-
     AddressDto getAddressByAddressDto(AddressDto addressDto);
+
+    TicketDto addTicket(String login, TicketDto ticketDto);
 }

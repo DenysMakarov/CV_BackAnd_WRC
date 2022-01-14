@@ -1,10 +1,13 @@
 package cv.backend.service;
 
 import cv.backend.dao.AddressRepository;
+import cv.backend.dao.TicketsRepository;
 import cv.backend.dao.UserRepository;
 import cv.backend.dto.AddressDto;
+import cv.backend.dto.TicketDto;
 import cv.backend.dto.UserDto;
 import cv.backend.model.Address;
+import cv.backend.model.Ticket;
 import cv.backend.model.User;
 import cv.backend.model.exeptions.EntityConflict;
 import cv.backend.model.exeptions.EntityNotFoundException;
@@ -22,13 +25,15 @@ public class UserService implements IUserService {
 
     UserRepository userRepository;
     AddressRepository addressRepository;
+    TicketsRepository ticketsRepository;
     ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, AddressRepository addressRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository, ModelMapper modelMapper, TicketsRepository ticketsRepository) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
+        this.ticketsRepository = ticketsRepository;
     }
 
     @Override
@@ -43,6 +48,7 @@ public class UserService implements IUserService {
             address = user.getAddress();
             addressRepository.save(address);
         }
+
         user.setAddress(address);
         userRepository.save(user);
         return true;
@@ -52,6 +58,7 @@ public class UserService implements IUserService {
     @Transactional(readOnly = true)
     public UserDto getUser(String login) {
         User user = userRepository.getUserByLogin(login);
+        if (user == null) throw new EntityNotFoundException();
         return modelMapper.map(user, UserDto.class);
     }
 
@@ -77,6 +84,20 @@ public class UserService implements IUserService {
         Address address = addressRepository.findAddressByCountryAndCityAndStreet(addressDto.getCountry(), addressDto.getCity(), addressDto.getStreet());
         if (address == null) throw new EntityNotFoundException();
         return modelMapper.map(address, AddressDto.class);
+    }
+
+    @Override
+    @Transactional
+    public TicketDto addTicket(String login, TicketDto ticketDto) {
+        User user = userRepository.getUserByLogin(login);
+        if (user == null) throw new EntityNotFoundException();
+        Ticket ticket = new Ticket(ticketDto.getEvent());
+//        user.addTicket(new Ticket(ticketDto.getEvent()));
+        ticket.setUser(user);
+        user.getTickets().add(ticket);
+        userRepository.save(user);
+
+        return modelMapper.map(ticket, TicketDto.class);
     }
 
 
