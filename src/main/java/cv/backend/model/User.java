@@ -23,21 +23,37 @@ public class User {
     private static final long serialVersionUID = 7186284224602196251L;
     @Id
     String login;
-    String firstName;
-    String lastName;
+    String username;
     String email;
     String password;
-    Integer phoneNumber;
+    String phoneNumber;
     String roles;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    LocalDate birthDate;
-
+    LocalDate birthDate = LocalDate.now(); // mock
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     Address address;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     Set<Ticket> tickets;
+
+    public User(String login, String username, String email, String password, String phoneNumber, LocalDate birthDate, Address address, Set<Ticket> tickets) {
+        this.login = login;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.tickets = tickets;
+    }
+
+    public User(String login, String username, String email, String password, Set<Ticket> tickets) {
+        this.login = login;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.tickets = tickets;
+    }
 
     public Ticket addTicket(Ticket ticket){
         tickets.add(ticket);
@@ -49,4 +65,7 @@ public class User {
         return ticket;
     }
 
+    public void setRoles(String roles) {
+        this.roles = roles.toUpperCase();
+    }
 }

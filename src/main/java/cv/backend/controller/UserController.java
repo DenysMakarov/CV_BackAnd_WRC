@@ -4,10 +4,13 @@ import cv.backend.dao.AddressRepository;
 import cv.backend.dto.AddressDto;
 import cv.backend.dto.TicketDto;
 import cv.backend.dto.UserDto;
+import cv.backend.dto.UserResponseDto;
 import cv.backend.model.Address;
 import cv.backend.model.User;
 import cv.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -22,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/registration")
     public boolean addUser(@RequestBody User user){
         return userService.addUser(user);
     }
@@ -30,6 +33,11 @@ public class UserController {
     @GetMapping("/user/{login}")
     public UserDto getUser(@PathVariable String login){
         return userService.getUser(login);
+    }
+
+    @PostMapping("/login")
+    public UserResponseDto login(Authentication authentication) {
+        return userService.loginUser(authentication.getName());
     }
 
     @GetMapping("/users")

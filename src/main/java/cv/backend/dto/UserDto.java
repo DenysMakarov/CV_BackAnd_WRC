@@ -16,10 +16,10 @@ import java.util.Set;
 @Getter
 @Setter
 public class UserDto {
-    String firstName;
-    String lastName;
+    String login;
+    String username;
     String email;
-    Integer phoneNumber;
+    String phoneNumber;
     String roles;
     LocalDate birthDate;
     Address address;

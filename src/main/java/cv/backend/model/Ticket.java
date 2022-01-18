@@ -14,8 +14,11 @@ import java.time.LocalDate;
 @Getter
 @Entity
 public class Ticket {
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "id", sequenceName = "id", allocationSize = 1, initialValue = 10000000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
     long id;
     String event;
     @ManyToOne(cascade = CascadeType.ALL)

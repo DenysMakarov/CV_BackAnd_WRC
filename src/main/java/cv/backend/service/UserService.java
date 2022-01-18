@@ -6,6 +6,7 @@ import cv.backend.dao.UserRepository;
 import cv.backend.dto.AddressDto;
 import cv.backend.dto.TicketDto;
 import cv.backend.dto.UserDto;
+import cv.backend.dto.UserResponseDto;
 import cv.backend.model.Address;
 import cv.backend.model.Ticket;
 import cv.backend.model.User;
@@ -13,8 +14,10 @@ import cv.backend.model.exeptions.EntityConflict;
 import cv.backend.model.exeptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Set;
@@ -27,28 +30,36 @@ public class UserService implements IUserService {
     AddressRepository addressRepository;
     TicketsRepository ticketsRepository;
     ModelMapper modelMapper;
+    PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserService(UserRepository userRepository, AddressRepository addressRepository, ModelMapper modelMapper, TicketsRepository ticketsRepository) {
-        this.modelMapper = modelMapper;
+    public UserService(UserRepository userRepository,
+                       AddressRepository addressRepository,
+                       TicketsRepository ticketsRepository,
+                       ModelMapper modelMapper,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.ticketsRepository = ticketsRepository;
+        this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public boolean addUser(User user) {
-        if (userRepository.getUserByLogin(user.getLogin()) != null) throw new EntityConflict();
+        if (userRepository.existsById(user.getLogin())) throw new EntityConflict(user.getLogin());
 
-        Address address = addressRepository.findAddressByCountryAndCityAndStreet(user.getAddress().getCountry(),
+        Address address = addressRepository.findAddressByCountryAndCityAndStreet(
+                user.getAddress().getCountry(),
                 user.getAddress().getCity(),
                 user.getAddress().getStreet());
         if (address == null) {
             address = user.getAddress();
             addressRepository.save(address);
         }
-
+        user.setRoles("USER");
+        String password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
         user.setAddress(address);
         userRepository.save(user);
         return true;
@@ -60,6 +71,13 @@ public class UserService implements IUserService {
         User user = userRepository.getUserByLogin(login);
         if (user == null) throw new EntityNotFoundException();
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserResponseDto loginUser(String login) {
+        User user = userRepository.findById(login)
+                .orElseThrow(() -> new EntityNotFoundException());
+        return modelMapper.map(user, UserResponseDto.class);
     }
 
     @Override
@@ -92,9 +110,8 @@ public class UserService implements IUserService {
         User user = userRepository.getUserByLogin(login);
         if (user == null) throw new EntityNotFoundException();
         Ticket ticket = new Ticket(ticketDto.getEvent());
-//        user.addTicket(new Ticket(ticketDto.getEvent()));
         ticket.setUser(user);
-        user.getTickets().add(ticket);
+        user.addTicket(ticket);
         userRepository.save(user);
 
         return modelMapper.map(ticket, TicketDto.class);

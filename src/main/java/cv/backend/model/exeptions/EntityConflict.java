@@ -6,4 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class EntityConflict extends RuntimeException{
     private static final long serialVersionUID = 3306650791278299160L;
+    public EntityConflict(String login) {
+        super("User " + login + " not found");
+    }
+
 }

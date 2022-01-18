@@ -3,6 +3,7 @@ package cv.backend.service;
 import cv.backend.dto.AddressDto;
 import cv.backend.dto.TicketDto;
 import cv.backend.dto.UserDto;
+import cv.backend.dto.UserResponseDto;
 import cv.backend.model.Address;
 import cv.backend.model.User;
 
@@ -12,6 +13,8 @@ public interface IUserService {
     boolean addUser(User user);
 
     UserDto getUser(String id);
+
+    UserResponseDto loginUser(String id);
 
     Set<UserDto> getAllUsers();
 

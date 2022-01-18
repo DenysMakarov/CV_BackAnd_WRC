@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -23,6 +24,9 @@ public class WrcjavaApplication implements CommandLineRunner {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
     }
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(WrcjavaApplication.class, args);
@@ -40,17 +44,31 @@ public class WrcjavaApplication implements CommandLineRunner {
 //        Address address4 = new Address("Uk", "London", "42 street");
 //        addressRepository.save(address4);
 
-        User user1 = new User("Tor", "Tor", "Valhalsky", "tor@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address, new HashSet<>());
-        User user2 = new User("Hulk","Hulk", "Hulkavic", "hulk@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address2, new HashSet<>());
-        User user3 = new User("IronMan","IronMan", "IronManovich", "iron@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address3, new HashSet<>());
-//        User user4 = new User("Terminator","Terminator", "Terminatovich", "terminator@gmail.com", "1234", 1234567890, "User", LocalDate.of(1985, 04, 07), address);
+        String password = passwordEncoder.encode("1234");
+
+        User user1 = new User("Tor", "Valhalsky", "tor@gmail.com", "1234", "1234567890",  LocalDate.of(1985, 04, 07), address, new HashSet<>());
+        User user2 = new User("Hulk", "Hulkavic", "hulk@gmail.com", "1234", "1234567890",  LocalDate.of(1985, 04, 07), address2, new HashSet<>());
+        User user3 = new User("IronMan", "IronManovich", "iron@gmail.com", "1234", "1234567890",  LocalDate.of(1985, 04, 07), address3, new HashSet<>());
+        user1.setRoles("USER"); user1.setPassword(password);
+        user2.setRoles("USER"); user2.setPassword(password);
+        user3.setRoles("USER"); user3.setPassword(password);
+
+
+        if(!userRepository.existsById("admin")) {
+            password = passwordEncoder.encode("admin");
+            User admin = new User("admin", "admin", "iron@gmail.com", password, "1234567890",  LocalDate.of(1985, 04, 07), address3, new HashSet<>());
+            admin.setRoles("ADMINISTRATOR MODErator uSer");
+            userRepository.save(admin);
+//            String password = passwordEncoder.encode("admin");
+//            UserAccount userAccount = new UserAccount("admin", password, "", "");
+//            userAccount.addRole("USER".toUpperCase());
+//            userAccount.addRole("MODERATOR".toUpperCase());
+//            userAccount.addRole("ADMINISTRATOR".toUpperCase());
+//            repository.save(userAccount);
+        }
 
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
-//        userRepository.save(user4);
-
-//        }
-
     }
 }

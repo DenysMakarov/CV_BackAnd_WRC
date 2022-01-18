@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Address implements Serializable {
     private static final long serialVersionUID = -6138544089636649083L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     long id;
     String country;
     String city;
