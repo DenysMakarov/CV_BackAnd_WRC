@@ -1,10 +1,7 @@
 package cv.backend.controller;
 
 import cv.backend.dao.AddressRepository;
-import cv.backend.dto.AddressDto;
-import cv.backend.dto.TicketDto;
-import cv.backend.dto.UserDto;
-import cv.backend.dto.UserResponseDto;
+import cv.backend.dto.*;
 import cv.backend.model.Address;
 import cv.backend.model.User;
 import cv.backend.service.UserService;
@@ -26,32 +23,41 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public boolean addUser(@RequestBody User user){
+    public boolean addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
     @GetMapping("/user/{login}")
-    public UserDto getUser(@PathVariable String login){
+    public UserDto getUser(@PathVariable String login) {
         return userService.getUser(login);
     }
 
     @PostMapping("/login")
     public UserResponseDto login(Authentication authentication) {
+        System.out.println(authentication);
         return userService.loginUser(authentication.getName());
     }
 
+
+//    @PostMapping("/login")
+//    public UserResponseDto login(@RequestBody LoginDto loginD, Authentication authentication) {
+//        System.out.println(authentication);
+//        System.out.println(loginD);
+//        return userService.loginUser(authentication.getName());
+//    }
+
     @GetMapping("/users")
-    public Set<UserDto> getAllUsers(){
+    public Set<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/user/address")
-    public AddressDto getAddressByAddressDto(@RequestBody AddressDto addressDto){
+    public AddressDto getAddressByAddressDto(@RequestBody AddressDto addressDto) {
         return userService.getAddressByAddressDto(addressDto);
     }
 
     @PutMapping("/user/tickets/{login}")
-    public TicketDto buyTicket(@PathVariable String login, @RequestBody TicketDto ticketDto){
+    public TicketDto buyTicket(@PathVariable String login, @RequestBody TicketDto ticketDto) {
         return userService.addTicket(login, ticketDto);
     }
 
