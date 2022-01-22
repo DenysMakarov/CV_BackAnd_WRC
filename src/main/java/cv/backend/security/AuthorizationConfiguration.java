@@ -25,7 +25,7 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter  {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/h2-console/**");
-        web.ignoring().antMatchers("/registration");
+        web.ignoring().antMatchers("/registration/**");
     }
 
 
@@ -43,7 +43,9 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter  {
 //                .hasRole("MODERATOR")
                 .antMatchers(HttpMethod.POST, "/login")
                 .permitAll()
-
+                .antMatchers(HttpMethod.PUT, "/user/tickets/{login}")
+                .access("#login == authentication.name")
+//
 //                .antMatchers("/account/user/{login}/role/{role}/**")
 //                .hasRole("ADMINISTRATOR")
 //                .antMatchers(HttpMethod.PUT, "/account/user/{login}/**")

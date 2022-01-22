@@ -1,5 +1,6 @@
 package cv.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,18 +25,21 @@ public class Ticket {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_login")
     User user;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date = LocalDate.now();
+    String phoneNumber;
+    String place;
+    boolean expDate;
 
     public Ticket(String event) {
         this.event = event;
     }
 
-    //    numberOfSlide: 1,
-//    firstName: "",
-//    secondName: "",
-//    phoneNumber: "",
-//    date: "You need to select event",
-//    place: "",
-//    nameTicket: "CHOOSE EVENT",
-//    month: ""
+    public Ticket(String event, User user, LocalDate date, String phoneNumber, String place) {
+        this.event = event;
+        this.user = user;
+        this.date = date;
+        this.phoneNumber = phoneNumber;
+        this.place = place;
+    }
 }

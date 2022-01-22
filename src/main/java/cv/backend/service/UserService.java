@@ -10,7 +10,7 @@ import cv.backend.dto.UserResponseDto;
 import cv.backend.model.Address;
 import cv.backend.model.Ticket;
 import cv.backend.model.User;
-import cv.backend.model.exeptions.EntityConflict;
+import cv.backend.model.exeptions.EntityConflictException;
 import cv.backend.model.exeptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public boolean addUser(User user) {
-        if (userRepository.existsById(user.getLogin())) throw new EntityConflict(user.getLogin());
+        if (userRepository.existsById(user.getLogin())) throw new EntityConflictException();
 
         Address address = addressRepository.findAddressByCountryAndCityAndStreet(
                 user.getAddress().getCountry(),
@@ -113,9 +113,6 @@ public class UserService implements IUserService {
         ticket.setUser(user);
         user.addTicket(ticket);
         userRepository.save(user);
-
         return modelMapper.map(ticket, TicketDto.class);
     }
-
-
 }

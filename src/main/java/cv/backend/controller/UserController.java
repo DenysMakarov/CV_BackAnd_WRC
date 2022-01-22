@@ -38,14 +38,6 @@ public class UserController {
         return userService.loginUser(authentication.getName());
     }
 
-
-//    @PostMapping("/login")
-//    public UserResponseDto login(@RequestBody LoginDto loginD, Authentication authentication) {
-//        System.out.println(authentication);
-//        System.out.println(loginD);
-//        return userService.loginUser(authentication.getName());
-//    }
-
     @GetMapping("/users")
     public Set<UserDto> getAllUsers() {
         return userService.getAllUsers();

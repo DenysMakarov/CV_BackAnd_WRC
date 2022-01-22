@@ -1,20 +1,23 @@
 package cv.backend.dto;
 
+import cv.backend.model.Address;
 import cv.backend.model.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class UserResponseDto {
-    String login;
     String username;
     String email;
-    String password;
+    String phoneNumber;
     String roles;
-    Set<Ticket> tickets;
+    LocalDate birthDate;
+    Address address;
+    Set<TicketDto> tickets;
 }
