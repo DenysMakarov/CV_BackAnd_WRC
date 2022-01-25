@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +28,17 @@ public class Event {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date;
     String price;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(textBottom, event.textBottom) && Objects.equals(date, event.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(textBottom, date);
+    }
 }

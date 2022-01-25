@@ -17,8 +17,8 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/events/event")
-    public EventDto addEvent(Event event) {
+    @PostMapping("/events/event")
+    public EventDto addEvent(@RequestBody Event event) {
         return eventService.addEvent(event);
     }
 
