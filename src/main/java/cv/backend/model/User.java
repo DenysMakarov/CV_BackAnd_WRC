@@ -2,7 +2,6 @@ package cv.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import sun.util.resources.LocaleData;
 
 import javax.persistence.*;
 import java.io.Serializable;

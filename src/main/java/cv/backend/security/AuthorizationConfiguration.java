@@ -43,9 +43,15 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter  {
 //                .hasRole("MODERATOR")
                 .antMatchers(HttpMethod.POST, "/login")
                 .permitAll()
+
+                .antMatchers(HttpMethod.GET, "/events/event/**")
+                .access("hasRole('ADMINISTRATOR')")
+
                 .antMatchers(HttpMethod.PUT, "/user/tickets/{login}")
                 .access("#login == authentication.name")
-//
+
+
+
 //                .antMatchers("/account/user/{login}/role/{role}/**")
 //                .hasRole("ADMINISTRATOR")
 //                .antMatchers(HttpMethod.PUT, "/account/user/{login}/**")
