@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EventService implements IEventService {
     EventRepository eventRepository;
@@ -34,5 +37,14 @@ public class EventService implements IEventService {
         Event e = eventRepository.findEventByTitleAndDate(event.getTitle(), event.getDate());
         if (e == null) throw new EntityConflictException();
         return modelMapper.map(e, EventDto.class);
+    }
+
+    @Override
+    public List<EventDto> findAll() {
+        List<EventDto> events = eventRepository.findAll().stream()
+                .map(el -> modelMapper.map(el, EventDto.class))
+                .collect(Collectors.toList());
+
+        return events;
     }
 }

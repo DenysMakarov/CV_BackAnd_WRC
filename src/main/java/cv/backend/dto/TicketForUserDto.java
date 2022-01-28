@@ -1,11 +1,11 @@
 package cv.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import cv.backend.model.Event;
 import cv.backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
@@ -15,13 +15,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class TicketDto {
-    long id;
-    String event;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    LocalDate date;
-    String phoneNumber;
+public class TicketForUserDto {
+    String title;
     String place;
-    boolean expDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate date = LocalDate.now();
     Double price;
 }

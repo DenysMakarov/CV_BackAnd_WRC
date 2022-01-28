@@ -20,5 +20,5 @@ public interface IUserService {
 
     AddressResponseDto getAddressByAddressDto(AddressDto addressDto);
 
-    TicketDto addTicket(String login, EventParamDto eventParamDto);
+    TicketForUserDto addTicket(String login, EventParamDto eventParamDto);
 }

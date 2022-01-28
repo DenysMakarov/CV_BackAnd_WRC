@@ -1,7 +1,5 @@
 package cv.backend.dto;
 
-import cv.backend.model.Address;
-import cv.backend.model.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +22,5 @@ public class UserDto {
     String roles;
     LocalDate birthDate;
     AddressDto address;
-    Set<TicketDto> tickets;
+    Set<TicketForUserDto> tickets;
 }

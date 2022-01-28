@@ -22,5 +22,5 @@ public class EventDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date;
     Double price;
-    Set<Ticket> tickets;
+    Set<TicketForEventDto> tickets;
 }

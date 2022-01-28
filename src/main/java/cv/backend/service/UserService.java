@@ -102,15 +102,22 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public TicketDto addTicket(String login, EventParamDto eventParamDto) {
+    public TicketForUserDto addTicket(String login, EventParamDto eventParamDto) {
         User user = userRepository.getUserByLogin(login);
         Event event = eventRepository.findEventByTitleAndDate(eventParamDto.getTitle(), eventParamDto.getDate());
         if (user == null || event == null) throw new EntityNotFoundException();
 
-        Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket(event.getTitle(), event.getPlace(),
+                user.getLogin(), user.getUsername(),
+                user.getEmail(), user, event.getDate(),
+                event, event.getPrice());
+
         ticket.setUser(user);
+        ticket.setEvent(event);
         user.addTicket(ticket);
+        event.addTicketToEvent(ticket);
         userRepository.save(user);
-        return modelMapper.map(ticket, TicketDto.class);
+        eventRepository.save(event);
+        return modelMapper.map(ticket, TicketForUserDto.class);
     }
 }

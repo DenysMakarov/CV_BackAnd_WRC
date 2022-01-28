@@ -51,7 +51,7 @@ public class UserController {
 //        return userService.addTicket(login, ticketDto);
 //    }
     @PutMapping("/user/tickets/{login}")
-    public TicketDto buyTicket(@PathVariable String login, @RequestBody EventParamDto eventParamDto) {
+    public TicketForUserDto buyTicket(@PathVariable String login, @RequestBody EventParamDto eventParamDto) {
         return userService.addTicket(login, eventParamDto);
     }
 

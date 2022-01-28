@@ -8,6 +8,8 @@ import cv.backend.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class EventController {
@@ -28,4 +30,8 @@ public class EventController {
         return eventService.findEvent(event);
     }
 
+    @GetMapping("/events/events")
+    public List<EventDto> findAll() {
+        return eventService.findAll();
+    }
 }
