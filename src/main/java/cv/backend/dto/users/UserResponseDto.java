@@ -1,6 +1,7 @@
-package cv.backend.dto;
+package cv.backend.dto.users;
 
-import cv.backend.model.Address;
+import cv.backend.dto.address.AddressDto;
+import cv.backend.dto.tickets.TicketForUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UserWithoutAddressDto {
-    String login;
+public class UserResponseDto {
     String username;
     String email;
     String phoneNumber;
     String roles;
     LocalDate birthDate;
-//    Set<TicketDto> tickets;
+    AddressDto address;
+    Set<TicketForUserDto> tickets;
 }

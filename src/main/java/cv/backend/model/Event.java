@@ -31,7 +31,7 @@ public class Event {
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
     Set<Ticket> tickets = new HashSet<>();
 
-    public Event( String title, String place, String titleDesc, String imgPath, LocalDate date, Double price, Set<Ticket> tickets) {
+    public Event( String title, String place, String titleDesc, String imgPath, LocalDate date, Double price) {
         this.title = title;
         this.place = place;
         this.titleDesc = titleDesc;

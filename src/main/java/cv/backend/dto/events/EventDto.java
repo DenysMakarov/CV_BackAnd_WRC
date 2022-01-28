@@ -1,13 +1,11 @@
-package cv.backend.dto;
+package cv.backend.dto.events;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import cv.backend.model.Ticket;
+import cv.backend.dto.tickets.TicketForEventDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.Set;
 

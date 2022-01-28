@@ -3,7 +3,6 @@ package cv.backend.security;
 import cv.backend.dao.UserRepository;
 import cv.backend.model.User;
 import cv.backend.model.exeptions.EntityNotFoundException;
-import cv.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

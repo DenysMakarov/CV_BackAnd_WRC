@@ -1,10 +1,9 @@
 package cv.backend.controller;
 
-import cv.backend.dto.EventDto;
-import cv.backend.dto.EventParamDto;
+import cv.backend.dto.events.EventDto;
+import cv.backend.dto.events.EventParamDto;
 import cv.backend.model.Event;
-import cv.backend.model.User;
-import cv.backend.service.EventService;
+import cv.backend.service.eventsService.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

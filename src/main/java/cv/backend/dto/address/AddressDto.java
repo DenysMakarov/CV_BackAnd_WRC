@@ -1,4 +1,4 @@
-package cv.backend.dto;
+package cv.backend.dto.address;
 
 import cv.backend.model.User;
 import lombok.AllArgsConstructor;

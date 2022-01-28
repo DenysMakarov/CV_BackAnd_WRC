@@ -1,8 +1,13 @@
 package cv.backend.controller;
 
-import cv.backend.dto.*;
+import cv.backend.dto.address.AddressDto;
+import cv.backend.dto.address.AddressResponseDto;
+import cv.backend.dto.events.EventParamDto;
+import cv.backend.dto.tickets.TicketForUserDto;
+import cv.backend.dto.users.UserDto;
+import cv.backend.dto.users.UserResponseDto;
 import cv.backend.model.User;
-import cv.backend.service.UserService;
+import cv.backend.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;

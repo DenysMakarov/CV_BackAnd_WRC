@@ -1,11 +1,10 @@
-package cv.backend.service;
+package cv.backend.service.eventsService;
 
 import cv.backend.dao.EventRepository;
-import cv.backend.dto.EventDto;
-import cv.backend.dto.EventParamDto;
+import cv.backend.dto.events.EventDto;
+import cv.backend.dto.events.EventParamDto;
 import cv.backend.model.Event;
 import cv.backend.model.exeptions.EntityConflictException;
-import cv.backend.model.exeptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

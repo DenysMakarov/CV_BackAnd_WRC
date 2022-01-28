@@ -1,7 +1,7 @@
-package cv.backend.service;
+package cv.backend.service.eventsService;
 
-import cv.backend.dto.EventDto;
-import cv.backend.dto.EventParamDto;
+import cv.backend.dto.events.EventDto;
+import cv.backend.dto.events.EventParamDto;
 import cv.backend.model.Event;
 
 import java.util.List;

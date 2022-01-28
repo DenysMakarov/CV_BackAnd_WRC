@@ -1,5 +1,7 @@
-package cv.backend.dto;
+package cv.backend.dto.users;
 
+import cv.backend.dto.address.AddressDto;
+import cv.backend.dto.tickets.TicketForUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

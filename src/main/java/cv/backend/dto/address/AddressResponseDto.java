@@ -1,9 +1,9 @@
-package cv.backend.dto;
+package cv.backend.dto.address;
 
+import cv.backend.dto.users.UserWithoutAddressDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Set;
 

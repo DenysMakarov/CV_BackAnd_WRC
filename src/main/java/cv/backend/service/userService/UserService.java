@@ -1,10 +1,15 @@
-package cv.backend.service;
+package cv.backend.service.userService;
 
 import cv.backend.dao.AddressRepository;
 import cv.backend.dao.EventRepository;
 import cv.backend.dao.TicketsRepository;
 import cv.backend.dao.UserRepository;
-import cv.backend.dto.*;
+import cv.backend.dto.address.AddressDto;
+import cv.backend.dto.address.AddressResponseDto;
+import cv.backend.dto.events.EventParamDto;
+import cv.backend.dto.tickets.TicketForUserDto;
+import cv.backend.dto.users.UserDto;
+import cv.backend.dto.users.UserResponseDto;
 import cv.backend.model.Address;
 import cv.backend.model.Event;
 import cv.backend.model.Ticket;
