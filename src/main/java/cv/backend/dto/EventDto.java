@@ -1,22 +1,26 @@
 package cv.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import cv.backend.model.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class EventDto {
-    String textTop;
+    String title;
+    String place;
+    String titleDesc;
     String imgPath;
-    String textCenter;
-    String textBottom;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date;
-    String price;
+    Double price;
+    Set<Ticket> tickets;
 }

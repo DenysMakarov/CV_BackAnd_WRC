@@ -23,6 +23,6 @@ public class UserDto {
     String phoneNumber;
     String roles;
     LocalDate birthDate;
-    Address address;
+    AddressDto address;
     Set<TicketDto> tickets;
 }

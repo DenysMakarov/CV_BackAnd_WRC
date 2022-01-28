@@ -9,5 +9,8 @@ import java.time.LocalDate;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
-    Event findEventByTextBottomAndPrice(String title, String price);
+    Event findEventByTitleAndPrice(String title, Double price);
+
+    Event findEventByTitleAndDate(String title, LocalDate date);
+
 }

@@ -1,23 +1,20 @@
 package cv.backend.service;
 
 import cv.backend.dao.AddressRepository;
+import cv.backend.dao.EventRepository;
 import cv.backend.dao.TicketsRepository;
 import cv.backend.dao.UserRepository;
-import cv.backend.dto.AddressDto;
-import cv.backend.dto.TicketDto;
-import cv.backend.dto.UserDto;
-import cv.backend.dto.UserResponseDto;
+import cv.backend.dto.*;
 import cv.backend.model.Address;
+import cv.backend.model.Event;
 import cv.backend.model.Ticket;
 import cv.backend.model.User;
 import cv.backend.model.exeptions.EntityConflictException;
 import cv.backend.model.exeptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Set;
@@ -30,17 +27,15 @@ public class UserService implements IUserService {
     AddressRepository addressRepository;
     TicketsRepository ticketsRepository;
     ModelMapper modelMapper;
+    EventRepository eventRepository;
     PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository,
-                       AddressRepository addressRepository,
-                       TicketsRepository ticketsRepository,
-                       ModelMapper modelMapper,
-                       PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository, TicketsRepository ticketsRepository, ModelMapper modelMapper, EventRepository eventRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.ticketsRepository = ticketsRepository;
         this.modelMapper = modelMapper;
+        this.eventRepository = eventRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -96,20 +91,23 @@ public class UserService implements IUserService {
         return null;
     }
 
+
     @Override
     @Transactional(readOnly = true)
-    public AddressDto getAddressByAddressDto(AddressDto addressDto) {
+    public AddressResponseDto getAddressByAddressDto(AddressDto addressDto) {
         Address address = addressRepository.findAddressByCountryAndCityAndStreet(addressDto.getCountry(), addressDto.getCity(), addressDto.getStreet());
         if (address == null) throw new EntityNotFoundException();
-        return modelMapper.map(address, AddressDto.class);
+        return modelMapper.map(address, AddressResponseDto.class);
     }
 
     @Override
     @Transactional
-    public TicketDto addTicket(String login, TicketDto ticketDto) {
+    public TicketDto addTicket(String login, EventParamDto eventParamDto) {
         User user = userRepository.getUserByLogin(login);
-        if (user == null) throw new EntityNotFoundException();
-        Ticket ticket = new Ticket(ticketDto.getEvent());
+        Event event = eventRepository.findEventByTitleAndDate(eventParamDto.getTitle(), eventParamDto.getDate());
+        if (user == null || event == null) throw new EntityNotFoundException();
+
+        Ticket ticket = new Ticket();
         ticket.setUser(user);
         user.addTicket(ticket);
         userRepository.save(user);

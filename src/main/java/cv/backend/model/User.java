@@ -29,7 +29,7 @@ public class User {
     String roles;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate birthDate = LocalDate.now(); // mock
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     Address address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

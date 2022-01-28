@@ -1,10 +1,6 @@
 package cv.backend.service;
 
-import cv.backend.dto.AddressDto;
-import cv.backend.dto.TicketDto;
-import cv.backend.dto.UserDto;
-import cv.backend.dto.UserResponseDto;
-import cv.backend.model.Address;
+import cv.backend.dto.*;
 import cv.backend.model.User;
 
 import java.util.Set;
@@ -22,7 +18,7 @@ public interface IUserService {
 
     UserDto removeUser(String id);
 
-    AddressDto getAddressByAddressDto(AddressDto addressDto);
+    AddressResponseDto getAddressByAddressDto(AddressDto addressDto);
 
-    TicketDto addTicket(String login, TicketDto ticketDto);
+    TicketDto addTicket(String login, EventParamDto eventParamDto);
 }

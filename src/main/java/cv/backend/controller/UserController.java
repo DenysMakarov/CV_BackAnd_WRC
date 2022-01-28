@@ -1,8 +1,6 @@
 package cv.backend.controller;
 
-import cv.backend.dao.AddressRepository;
 import cv.backend.dto.*;
-import cv.backend.model.Address;
 import cv.backend.model.User;
 import cv.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +42,17 @@ public class UserController {
     }
 
     @GetMapping("/user/address")
-    public AddressDto getAddressByAddressDto(@RequestBody AddressDto addressDto) {
+    public AddressResponseDto getAddressByAddressDto(@RequestBody AddressDto addressDto) {
         return userService.getAddressByAddressDto(addressDto);
     }
 
+//    @PutMapping("/user/tickets/{login}")
+//    public TicketDto buyTicket(@PathVariable String login, @RequestBody TicketDto ticketDto) {
+//        return userService.addTicket(login, ticketDto);
+//    }
     @PutMapping("/user/tickets/{login}")
-    public TicketDto buyTicket(@PathVariable String login, @RequestBody TicketDto ticketDto) {
-        return userService.addTicket(login, ticketDto);
+    public TicketDto buyTicket(@PathVariable String login, @RequestBody EventParamDto eventParamDto) {
+        return userService.addTicket(login, eventParamDto);
     }
 
 }

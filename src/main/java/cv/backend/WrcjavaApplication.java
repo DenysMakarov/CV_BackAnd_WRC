@@ -1,28 +1,36 @@
 package cv.backend;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import cv.backend.dao.AddressRepository;
+import cv.backend.dao.EventRepository;
 import cv.backend.dao.UserRepository;
 import cv.backend.model.Address;
+import cv.backend.model.Event;
+import cv.backend.model.Ticket;
 import cv.backend.model.User;
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 public class WrcjavaApplication implements CommandLineRunner {
     public static UserRepository userRepository;
     public static AddressRepository addressRepository;
+    public EventRepository eventRepository;
 
     @Autowired
-    public WrcjavaApplication(UserRepository userRepository, AddressRepository addressRepository) {
+    public WrcjavaApplication(UserRepository userRepository, AddressRepository addressRepository, EventRepository eventRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
+        this.eventRepository = eventRepository;
     }
 
     @Autowired
@@ -34,29 +42,30 @@ public class WrcjavaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        if (userRepository.existsById(1000L)) {
         Address address = new Address("UK", "London", "42 street");
         addressRepository.save(address);
         Address address2 = new Address("USA", "NewYork", "15 street");
         addressRepository.save(address2);
         Address address3 = new Address("CANADA", "Vancouver", "77 street");
         addressRepository.save(address3);
-//        Address address4 = new Address("Uk", "London", "42 street");
-//        addressRepository.save(address4);
+
 
         String password = passwordEncoder.encode("1234");
 
-        User user1 = new User("Tor", "Valhalsky", "tor@gmail.com", "1234", "1234567890",  LocalDate.of(1985, 04, 07), address, new HashSet<>());
-        User user2 = new User("Hulk", "Hulkavic", "hulk@gmail.com", "1234", "1234567890",  LocalDate.of(1985, 04, 07), address2, new HashSet<>());
-        User user3 = new User("IronMan", "IronManovich", "iron@gmail.com", "1234", "1234567890",  LocalDate.of(1985, 04, 07), address3, new HashSet<>());
-        user1.setRoles("USER"); user1.setPassword(password);
-        user2.setRoles("USER"); user2.setPassword(password);
-        user3.setRoles("USER"); user3.setPassword(password);
+        User user1 = new User("Tor", "Valhalsky", "tor@gmail.com", "1234", "1234567890", LocalDate.of(1985, 04, 07), address, new HashSet<>());
+        User user2 = new User("Hulk", "Hulkavic", "hulk@gmail.com", "1234", "1234567890", LocalDate.of(1985, 04, 07), address2, new HashSet<>());
+        User user3 = new User("IronMan", "IronManovich", "iron@gmail.com", "1234", "1234567890", LocalDate.of(1985, 04, 07), address3, new HashSet<>());
+        user1.setRoles("USER");
+        user1.setPassword(password);
+        user2.setRoles("USER");
+        user2.setPassword(password);
+        user3.setRoles("USER");
+        user3.setPassword(password);
 
 
-        if(!userRepository.existsById("admin")) {
+        if (!userRepository.existsById("admin")) {
             password = passwordEncoder.encode("admin");
-            User admin = new User("admin", "admin", "iron@gmail.com", password, "1234567890",  LocalDate.of(1985, 04, 07), address3, new HashSet<>());
+            User admin = new User("admin", "admin", "iron@gmail.com", password, "1234567890", LocalDate.of(1985, 04, 07), address3, new HashSet<>());
             admin.setRoles("ADMINISTRATOR MODErator uSer");
             userRepository.save(admin);
 //            String password = passwordEncoder.encode("admin");
@@ -66,6 +75,14 @@ public class WrcjavaApplication implements CommandLineRunner {
 //            userAccount.addRole("ADMINISTRATOR".toUpperCase());
 //            repository.save(userAccount);
         }
+
+        Event event1 = new Event("F1", "MONACO", "....", "../../..", LocalDate.of(2022, 7, 8), 210.00, new HashSet<>());
+        Event event2 = new Event("WRC", "ISRAEL", "....", "../../..", LocalDate.of(2022, 3, 11), 375.00, new HashSet<>());
+        Event event3 = new Event("BOMACO", "MONTE-CARLO", "....", "../../..", LocalDate.of(2021, 8, 12), 175.00, new HashSet<>());
+
+        eventRepository.save(event1);
+        eventRepository.save(event2);
+        eventRepository.save(event3);
 
         userRepository.save(user1);
         userRepository.save(user2);

@@ -3,15 +3,15 @@ package cv.backend.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Setter
 @Getter
 @EqualsAndHashCode(of = {"id"})
@@ -21,24 +21,40 @@ public class Event {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     Long id;
-    String textTop;
+    String title;
+    String place;
+    String titleDesc;
     String imgPath;
-    String textCenter;
-    String textBottom;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date;
-    String price;
+    Double price;
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    Set<Ticket> tickets = new HashSet<>();
+
+    public Event( String title, String place, String titleDesc, String imgPath, LocalDate date, Double price, Set<Ticket> tickets) {
+        this.title = title;
+        this.place = place;
+        this.titleDesc = titleDesc;
+        this.imgPath = imgPath;
+        this.date = date;
+        this.price = price;
+    }
+
+    public Ticket addTicketToEvent(Ticket ticket){
+        tickets.add(ticket);
+        return ticket;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return Objects.equals(textBottom, event.textBottom) && Objects.equals(date, event.date);
+        return Objects.equals(title, event.title) && Objects.equals(date, event.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textBottom, date);
+        return Objects.hash(title, date);
     }
 }

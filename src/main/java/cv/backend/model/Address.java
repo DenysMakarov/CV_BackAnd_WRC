@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +20,8 @@ public class Address implements Serializable {
     String country;
     String city;
     String street;
+    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
+    Set<User> users;
 
     public Address(String country, String city, String street) {
         this.country = country;

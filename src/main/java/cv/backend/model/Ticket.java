@@ -16,30 +16,35 @@ import java.time.LocalDate;
 @Entity
 public class Ticket {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Id
     @SequenceGenerator(name = "id", sequenceName = "id", allocationSize = 1, initialValue = 10000000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
     long id;
-    String event;
+//    String event;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_login")
     User user;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date = LocalDate.now();
-    String phoneNumber;
-    String place;
-    boolean expDate;
+//    String phoneNumber;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "event_id")
+    Event event;
+    Double price;
 
-    public Ticket(String event) {
-        this.event = event;
-    }
+//    boolean expDate;
 
-    public Ticket(String event, User user, LocalDate date, String phoneNumber, String place) {
-        this.event = event;
-        this.user = user;
-        this.date = date;
-        this.phoneNumber = phoneNumber;
-        this.place = place;
-    }
+//    public Ticket(String event) {
+//        this.event = event;
+//    }
+
+
+
+    //    public Ticket(String event, User user, LocalDate date, String phoneNumber, String place) {
+////        this.event = event;
+//        this.user = user;
+//        this.date = date;
+//        this.phoneNumber = phoneNumber;
+//        this.place = place;
+//    }
 }
