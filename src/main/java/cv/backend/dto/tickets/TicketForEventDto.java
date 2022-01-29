@@ -15,4 +15,8 @@ public class TicketForEventDto {
     String loginOfUser;
     String nameOfUser;
     String email;
+//    String place;
+//    Double price;
+//    @JsonFormat(pattern = "yyyy-MM-dd")
+//    LocalDate date = LocalDate.now();
 }

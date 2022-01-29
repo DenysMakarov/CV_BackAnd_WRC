@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class TicketForUserDto {
+    String id;
     String title;
     String place;
     @JsonFormat(pattern = "yyyy-MM-dd")

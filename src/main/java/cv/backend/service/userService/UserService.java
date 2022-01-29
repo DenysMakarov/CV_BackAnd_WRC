@@ -119,10 +119,20 @@ public class UserService implements IUserService {
 
         ticket.setUser(user);
         ticket.setEvent(event);
-        user.addTicket(ticket);
-        event.addTicketToEvent(ticket);
-        userRepository.save(user);
-        eventRepository.save(event);
+        ticketsRepository.save(ticket);
+//        user.addTicket(ticket);
+//        event.addTicketToEvent(ticket);
+//        userRepository.save(user);
+//        eventRepository.save(event);
         return modelMapper.map(ticket, TicketForUserDto.class);
+    }
+
+
+    @Override
+    @Transactional
+    public Ticket removeTicket(Long id) {
+        Ticket ticket = ticketsRepository.getById(id);
+        if(ticket == null) throw new EntityNotFoundException();
+        return ticketsRepository.removeById(id);
     }
 }

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class EventTicketDto {
+public class EventSliderDto {
     String titleDesc;
     String imgPath;
     String title;

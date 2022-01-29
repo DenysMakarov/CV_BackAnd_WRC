@@ -12,6 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class EventParamDto {
+    /*
+     * FOR METHOD 'ADD TICKET'
+     * */
     String title;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date;

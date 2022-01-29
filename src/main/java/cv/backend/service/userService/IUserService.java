@@ -6,6 +6,7 @@ import cv.backend.dto.events.EventParamDto;
 import cv.backend.dto.tickets.TicketForUserDto;
 import cv.backend.dto.users.UserDto;
 import cv.backend.dto.users.UserResponseDto;
+import cv.backend.model.Ticket;
 import cv.backend.model.User;
 
 import java.util.Set;
@@ -26,4 +27,6 @@ public interface IUserService {
     AddressResponseDto getAddressByAddressDto(AddressDto addressDto);
 
     TicketForUserDto addTicket(String login, EventParamDto eventParamDto);
+
+    Ticket removeTicket(Long id);
 }

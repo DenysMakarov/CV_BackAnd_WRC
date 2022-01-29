@@ -421,3 +421,11 @@ SELECT login FROM TICKET inner join user on ticket.user_login = user.login [9005
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+2022-01-28 19:10:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM TICKET TICKET EVENT[*]"
+Syntax error in SQL statement "SELECT * FROM TICKET TICKET EVENT[*]"; SQL statement:
+SELECT * FROM TICKET TICKET EVENT [42000-200]
+2022-01-28 19:10:09 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM TICKET TICKET EVENT[*]"
+Syntax error in SQL statement "SELECT * FROM TICKET TICKET EVENT[*]"; SQL statement:
+SELECT * FROM TICKET TICKET EVENT [42000-200]
