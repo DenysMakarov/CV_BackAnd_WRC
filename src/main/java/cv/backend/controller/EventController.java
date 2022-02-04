@@ -5,6 +5,7 @@ import cv.backend.dto.events.EventParamDto;
 import cv.backend.model.Event;
 import cv.backend.service.eventsService.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,10 @@ public class EventController {
     @GetMapping("/events/events")
     public List<EventDto> findAll() {
         return eventService.findAll();
+    }
+
+    @GetMapping("/event/{id}")
+    public EventDto getEvent(@PathVariable Long id) {
+        return eventService.getEvent(id);
     }
 }

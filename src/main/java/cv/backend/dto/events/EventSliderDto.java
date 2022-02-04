@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class EventSliderDto {
+    Long id;
     String titleDesc;
     String imgPath;
     String title;

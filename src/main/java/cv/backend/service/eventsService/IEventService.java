@@ -10,4 +10,5 @@ public interface IEventService {
     EventDto addEvent(Event event);
     EventDto findEvent(EventParamDto event);
     List<EventDto> findAll();
+    EventDto getEvent(Long id);
 }

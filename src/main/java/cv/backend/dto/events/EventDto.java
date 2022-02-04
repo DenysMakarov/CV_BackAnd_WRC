@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 public class EventDto {
+    Long id;
     String title;
     String place;
     String titleDesc;
