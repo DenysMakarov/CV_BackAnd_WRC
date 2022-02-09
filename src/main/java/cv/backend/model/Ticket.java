@@ -1,16 +1,14 @@
 package cv.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
+//@ToString
 @Setter
 @Getter
 @Entity
@@ -25,12 +23,12 @@ public class Ticket {
     String loginOfUser;
     String nameOfUser;
     String email;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_login")
     User user;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date = LocalDate.now();
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "event_id")
     Event event;
     Double price;

@@ -7,6 +7,7 @@ import cv.backend.dao.UserRepository;
 import cv.backend.dto.address.AddressDto;
 import cv.backend.dto.address.AddressResponseDto;
 import cv.backend.dto.events.EventParamDto;
+import cv.backend.dto.tickets.TicketForEventDto;
 import cv.backend.dto.tickets.TicketForUserDto;
 import cv.backend.dto.users.UserDto;
 import cv.backend.dto.users.UserResponseDto;
@@ -107,9 +108,9 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public TicketForUserDto addTicket(String login, EventParamDto eventParamDto) {
+    public TicketForUserDto addTicket(String login, Long id) {
         User user = userRepository.getUserByLogin(login);
-        Event event = eventRepository.findEventByTitleAndDate(eventParamDto.getTitle(), eventParamDto.getDate());
+        Event event = eventRepository.findEventById(id);
         if (user == null || event == null) throw new EntityNotFoundException();
 
         Ticket ticket = new Ticket(event.getTitle(), event.getPlace(),
@@ -130,9 +131,19 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public Ticket removeTicket(Long id) {
-        Ticket ticket = ticketsRepository.getById(id);
+    public TicketForEventDto removeTicket(Long id) {
+        Ticket ticket = ticketsRepository.findTicketById(id);
+        System.out.println(ticket);
         if(ticket == null) throw new EntityNotFoundException();
-        return ticketsRepository.removeById(id);
+        ticketsRepository.deleteTicketById(id);
+        return modelMapper.map(ticket, TicketForEventDto.class);
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public TicketForEventDto findTicketById(Long id) {
+        Ticket ticket = ticketsRepository.findTicketById(id);
+        return modelMapper.map(ticket, TicketForEventDto.class);
     }
 }

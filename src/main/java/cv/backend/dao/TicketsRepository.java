@@ -4,5 +4,6 @@ import cv.backend.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TicketsRepository extends JpaRepository<Ticket, Long> {
-    Ticket removeById(Long id);
+    void deleteTicketById(Long id);
+    Ticket findTicketById(Long id);
 }

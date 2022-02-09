@@ -3,6 +3,7 @@ package cv.backend.service.userService;
 import cv.backend.dto.address.AddressDto;
 import cv.backend.dto.address.AddressResponseDto;
 import cv.backend.dto.events.EventParamDto;
+import cv.backend.dto.tickets.TicketForEventDto;
 import cv.backend.dto.tickets.TicketForUserDto;
 import cv.backend.dto.users.UserDto;
 import cv.backend.dto.users.UserResponseDto;
@@ -26,7 +27,9 @@ public interface IUserService {
 
     AddressResponseDto getAddressByAddressDto(AddressDto addressDto);
 
-    TicketForUserDto addTicket(String login, EventParamDto eventParamDto);
+    TicketForUserDto addTicket(String login, Long id);
 
-    Ticket removeTicket(Long id);
+    TicketForEventDto removeTicket(Long id);
+
+    TicketForEventDto findTicketById(Long id);
 }

@@ -32,7 +32,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     Address address;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany( mappedBy = "user")
     Set<Ticket> tickets;
 
     public User(String login, String username, String email, String password, String phoneNumber, LocalDate birthDate, Address address, Set<Ticket> tickets) {

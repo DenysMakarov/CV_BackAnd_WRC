@@ -3,9 +3,11 @@ package cv.backend.controller;
 import cv.backend.dto.address.AddressDto;
 import cv.backend.dto.address.AddressResponseDto;
 import cv.backend.dto.events.EventParamDto;
+import cv.backend.dto.tickets.TicketForEventDto;
 import cv.backend.dto.tickets.TicketForUserDto;
 import cv.backend.dto.users.UserDto;
 import cv.backend.dto.users.UserResponseDto;
+import cv.backend.model.Ticket;
 import cv.backend.model.User;
 import cv.backend.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,6 @@ public class UserController {
 
     @PostMapping("/login")
     public UserResponseDto login(Authentication authentication) {
-        System.out.println(authentication);
         return userService.loginUser(authentication.getName());
     }
 
@@ -51,13 +52,18 @@ public class UserController {
         return userService.getAddressByAddressDto(addressDto);
     }
 
-//    @PutMapping("/user/tickets/{login}")
-//    public TicketDto buyTicket(@PathVariable String login, @RequestBody TicketDto ticketDto) {
-//        return userService.addTicket(login, ticketDto);
-//    }
-    @PutMapping("/user/tickets/{login}")
-    public TicketForUserDto buyTicket(@PathVariable String login, @RequestBody EventParamDto eventParamDto) {
-        return userService.addTicket(login, eventParamDto);
+    @PutMapping("/user/tickets/{login}/{id}")
+    public TicketForUserDto buyTicket(@PathVariable String login, @PathVariable Long id) {
+        return userService.addTicket(login, id);
+    }
+
+    @DeleteMapping("/ticket/remove/{id}")
+    public TicketForEventDto removeTicket(@PathVariable Long id){
+        return userService.removeTicket(id);
+    }
+    @GetMapping("/ticket/{id}")
+    public TicketForEventDto findTicketById(@PathVariable Long id){
+        return userService.findTicketById(id);
     }
 
 }

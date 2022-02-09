@@ -85,10 +85,13 @@ public class WrcjavaApplication implements CommandLineRunner {
         events.stream().forEach(el -> eventRepository.save(el));
 
 
-        userService.addTicket(admin.getLogin(), new EventParamDto(event1.getTitle(), event1.getDate()));
-        userService.addTicket(admin.getLogin(), new EventParamDto(event1.getTitle(), event1.getDate()));
-        userService.addTicket(user1.getLogin(), new EventParamDto(event2.getTitle(), event2.getDate()));
-        userService.addTicket(user1.getLogin(), new EventParamDto(event3.getTitle(), event3.getDate()));
-        userService.addTicket(user2.getLogin(), new EventParamDto(event3.getTitle(), event3.getDate()));
+//        userService.addTicket(admin.getLogin(), 1L);
+//        userService.addTicket(admin.getLogin(), 1L);
+//        userService.addTicket(admin.getLogin(), 4L);
+        userService.addTicket(admin.getLogin(), 3L);
+        userService.addTicket(admin.getLogin(), 2L);
+        userService.addTicket(user1.getLogin(), 2L);
+        userService.addTicket(user1.getLogin(), 2L);
+        userService.addTicket(user2.getLogin(), 3L);
     }
 }
