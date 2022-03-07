@@ -29,7 +29,7 @@ public interface IUserService {
 
     TicketForUserDto addTicket(String login, Long id);
 
-    TicketForEventDto removeTicket(Long id);
+    TicketForEventDto removeTicket(String login, Long id);
 
     TicketForEventDto findTicketById(Long id);
 }

@@ -22,4 +22,5 @@ public class TicketForUserDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate date = LocalDate.now();
     Double price;
+    String cls;
 }

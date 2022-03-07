@@ -32,6 +32,7 @@ public class Ticket {
     @JoinColumn(name = "event_id")
     Event event;
     Double price;
+    String cls = "";
 
     public Ticket(String title, String place, String userLogin, String userName, String email, User user, LocalDate date, Event event, Double price) {
         this.title = title;

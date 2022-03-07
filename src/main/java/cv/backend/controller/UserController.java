@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.Set;
 
 @RestController
@@ -57,10 +58,11 @@ public class UserController {
         return userService.addTicket(login, id);
     }
 
-    @DeleteMapping("/ticket/remove/{id}")
-    public TicketForEventDto removeTicket(@PathVariable Long id){
-        return userService.removeTicket(id);
+    @DeleteMapping("/ticket/remove/{login}/{id}")
+    public TicketForEventDto removeTicket(@PathVariable Long id, @PathVariable String login){
+        return userService.removeTicket(login, id);
     }
+
     @GetMapping("/ticket/{id}")
     public TicketForEventDto findTicketById(@PathVariable Long id){
         return userService.findTicketById(id);

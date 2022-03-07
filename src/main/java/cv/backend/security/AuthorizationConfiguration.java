@@ -52,6 +52,9 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter  {
                 .antMatchers(HttpMethod.PUT, "/user/tickets/{login}")
                 .access("#login == authentication.name")
 
+                .antMatchers(HttpMethod.DELETE, "/ticket/remove/{login}/{id}")
+                .access("#login == authentication.name")
+
 
 
 //                .antMatchers("/account/user/{login}/role/{role}/**")

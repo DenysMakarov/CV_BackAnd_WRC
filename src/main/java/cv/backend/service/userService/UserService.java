@@ -17,6 +17,7 @@ import cv.backend.model.Ticket;
 import cv.backend.model.User;
 import cv.backend.model.exeptions.EntityConflictException;
 import cv.backend.model.exeptions.EntityNotFoundException;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -131,7 +132,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public TicketForEventDto removeTicket(Long id) {
+    public TicketForEventDto removeTicket(String login, Long id) {
         Ticket ticket = ticketsRepository.findTicketById(id);
         System.out.println(ticket);
         if(ticket == null) throw new EntityNotFoundException();
@@ -144,6 +145,7 @@ public class UserService implements IUserService {
     @Transactional(readOnly = true)
     public TicketForEventDto findTicketById(Long id) {
         Ticket ticket = ticketsRepository.findTicketById(id);
+        System.out.println();
         return modelMapper.map(ticket, TicketForEventDto.class);
     }
 }

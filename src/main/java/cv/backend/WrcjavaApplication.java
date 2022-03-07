@@ -87,9 +87,9 @@ public class WrcjavaApplication implements CommandLineRunner {
 
 //        userService.addTicket(admin.getLogin(), 1L);
 //        userService.addTicket(admin.getLogin(), 1L);
-//        userService.addTicket(admin.getLogin(), 4L);
+        userService.addTicket(admin.getLogin(), 4L);
         userService.addTicket(admin.getLogin(), 3L);
-        userService.addTicket(admin.getLogin(), 2L);
+//        userService.addTicket(admin.getLogin(), 2L);
         userService.addTicket(user1.getLogin(), 2L);
         userService.addTicket(user1.getLogin(), 2L);
         userService.addTicket(user2.getLogin(), 3L);
