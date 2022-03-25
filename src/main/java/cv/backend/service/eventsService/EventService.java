@@ -4,7 +4,7 @@ import cv.backend.dao.EventRepository;
 import cv.backend.dto.events.EventDto;
 import cv.backend.dto.events.EventParamDto;
 import cv.backend.model.Event;
-import cv.backend.model.exeptions.EntityConflictException;
+import cv.backend.model.exeptions.ApiConflictException;
 import cv.backend.model.exeptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class EventService implements IEventService {
     @Override
     public EventDto addEvent(Event event) {
         Event e = eventRepository.findEventByTitleAndDate(event.getTitle(), event.getDate());
-        if (e != null) throw new EntityConflictException();
+        if (e != null) throw new ApiConflictException(e.getTitle() + " not found");
         eventRepository.save(event);
         return modelMapper.map(event, EventDto.class);
     }
@@ -35,7 +35,7 @@ public class EventService implements IEventService {
     @Override
     public EventDto findEvent(EventParamDto eventParamDto) {
         Event event = eventRepository.findEventByTitleAndDate(eventParamDto.getTitle(), eventParamDto.getDate());
-        if (event == null) throw new EntityConflictException();
+        if (event == null) throw new ApiConflictException(event.getTitle() + " not found");
         return modelMapper.map(event, EventDto.class);
     }
 

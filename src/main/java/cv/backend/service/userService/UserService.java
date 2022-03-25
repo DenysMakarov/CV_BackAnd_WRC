@@ -15,13 +15,13 @@ import cv.backend.model.Address;
 import cv.backend.model.Event;
 import cv.backend.model.Ticket;
 import cv.backend.model.User;
-import cv.backend.model.exeptions.EntityConflictException;
-import cv.backend.model.exeptions.EntityNotFoundException;
+import cv.backend.model.exeptions.*;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Set;
@@ -49,7 +49,8 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public boolean addUser(User user) {
-        if (userRepository.existsById(user.getLogin())) throw new EntityConflictException();
+//        if (userRepository.existsById(user.getLogin())) throw new EntityConflictException();
+        if (userRepository.existsById(user.getLogin())) throw new ApiConflictException(user.getLogin() + " Already exist");
 
         Address address = addressRepository.findAddressByCountryAndCityAndStreet(
                 user.getAddress().getCountry(),
@@ -67,18 +68,20 @@ public class UserService implements IUserService {
         return true;
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public UserDto getUser(String login) {
         User user = userRepository.getUserByLogin(login);
-        if (user == null) throw new EntityNotFoundException();
+        if (user == null) throw new ApiNotFondException(login + " not fond");
         return modelMapper.map(user, UserDto.class);
     }
+
 
     @Override
     public UserResponseDto loginUser(String login) {
         User user = userRepository.findById(login)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(() -> new MyException("Nothing"));
         return modelMapper.map(user, UserResponseDto.class);
     }
 
@@ -103,7 +106,7 @@ public class UserService implements IUserService {
     @Transactional(readOnly = true)
     public AddressResponseDto getAddressByAddressDto(AddressDto addressDto) {
         Address address = addressRepository.findAddressByCountryAndCityAndStreet(addressDto.getCountry(), addressDto.getCity(), addressDto.getStreet());
-        if (address == null) throw new EntityNotFoundException();
+        if (address == null) throw new ApiNotFondException("Address not fond");
         return modelMapper.map(address, AddressResponseDto.class);
     }
 
@@ -112,7 +115,7 @@ public class UserService implements IUserService {
     public TicketForUserDto addTicket(String login, Long id) {
         User user = userRepository.getUserByLogin(login);
         Event event = eventRepository.findEventById(id);
-        if (user == null || event == null) throw new EntityNotFoundException();
+        if (user == null || event == null) throw new ApiNotFondException("Address or User not fond");
 
         Ticket ticket = new Ticket(event.getTitle(), event.getPlace(),
                 user.getLogin(), user.getUsername(),
@@ -135,7 +138,7 @@ public class UserService implements IUserService {
     public TicketForEventDto removeTicket(String login, Long id) {
         Ticket ticket = ticketsRepository.findTicketById(id);
         System.out.println(ticket);
-        if(ticket == null) throw new EntityNotFoundException();
+        if(ticket == null) throw new ApiNotFondException("ticket " + ticket.getId() + " not fond");
         ticketsRepository.deleteTicketById(id);
         return modelMapper.map(ticket, TicketForEventDto.class);
 
@@ -147,5 +150,13 @@ public class UserService implements IUserService {
         Ticket ticket = ticketsRepository.findTicketById(id);
         System.out.println();
         return modelMapper.map(ticket, TicketForEventDto.class);
+    }
+
+
+    @Override
+    public UserDto findUserTest(String login) {
+        User user = userRepository.getUserByLogin(login);
+        if (user == null) return null;
+        return modelMapper.map(user, UserDto.class);
     }
 }

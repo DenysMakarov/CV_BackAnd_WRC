@@ -32,4 +32,6 @@ public interface IUserService {
     TicketForEventDto removeTicket(String login, Long id);
 
     TicketForEventDto findTicketById(Long id);
+
+    UserDto findUserTest(String login);
 }
